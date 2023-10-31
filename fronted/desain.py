@@ -1,5 +1,5 @@
 '''
-Implement Your Code in here or create new file
+Kerja Kerja Kerja
 ==============================================
 Implementasi Kode mu disini atau buat file baru
 '''
