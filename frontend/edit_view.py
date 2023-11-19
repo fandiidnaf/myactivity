@@ -1,15 +1,13 @@
+from datetime import datetime, timedelta
 from flet import *
 import flet
+from frontend.tampilan_date_picker import format_date_picker
+from frontend import item_task
 from reference.ref import RefHalamanTambahJadwal as ref
 from reference.ref import RefItemTask as ref2
-# from halaman_tambah_jadwal import show_date_picker
-# from backend.database import list_of_item
-from backend.func import search_by_id as search
-from datetime import datetime, timedelta
 from reference.ref import RefEditView as ref3
-from frontend.tampilan_date_picker import format_date_picker
+from backend.func import search_by_id as search
 from backend.format_time import formatted_time
-from frontend import item_task
 from backend import database as db
 
 
@@ -34,7 +32,8 @@ def view_edit_jadwal(page):
                 controls=[
                     TextField(
                         ref=ref3.TEXTFIELD_NAMA_ACARA_EDIT,
-                        value=str(jadwal.nama_acara)
+                        value=str(jadwal.nama_acara),
+                        label='Nama Jadwal'
                     ),
                     Row(
                         ref=ref3.ROW_DATE_PICKER_EDIT,
@@ -49,12 +48,15 @@ def view_edit_jadwal(page):
                     ),
                     TextField(
                         ref=ref3.TEXTFIELD_WAKTU_EDIT,
-                        value=str(jadwal.waktu.strftime('%H:%M'))
+                        value=str(jadwal.waktu.strftime('%H:%M')),
+                        label='Waktu Jadwal',
+                        hint_text='HH:MM'
                     )
                 ]
             ),
             FloatingActionButton(
-                text='Setting',
+                tooltip='Edit Jadwal',
+                text='Edit',
                 on_click=lambda e:edit_jadwal(e, page, jadwal)
             )
 
@@ -67,14 +69,11 @@ def open_banner(e, page):
 
 def banner(page):
     page.banner = Banner(
-        # ref=ref3.BANNER,
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
-            "Oops, Sepertinya Ada Bug!\nPlis Jangan Repot Kami !!!",
-            size=50
+            "Oops, Sepertinya Ada Bug! Plis Jangan Repot Kami !!!",
         ),
-        # force_actions_below=True,
         actions=[
             TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
         ],
@@ -83,19 +82,6 @@ def banner(page):
 def close_banner(e, page):
     page.banner.open = False
     page.update()
-
-# def banner(page):
-#     page.banner = Banner(
-#         bgcolor=colors.AMBER_100,
-#         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
-#         content=Text(
-#             "Oops, Sepertinya Ada Bug! Plis Jangan Repot Kami !!!"
-#         ),
-#         actions=[
-#             TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
-#         ],
-#     )
-
 
 
 def show_date_picker_edit(e, page, jadwal):

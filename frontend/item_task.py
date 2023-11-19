@@ -1,16 +1,14 @@
-from datetime import datetime
-from math import exp
 from flet import *
 import flet
-from backend.format_time import formatted_time
-from model.jadwal import Jadwal
+from frontend.tampilan_date_picker import format_date_picker
 from reference.ref import RefHalamanUtama as ref
+from reference.ref import RefItemTask as ref2
 from backend import database as db
 from backend.func import *
-# from frontend.edit_view import view_edit_jadwal
-from reference.ref import RefItemTask as ref2
-from frontend.tampilan_date_picker import format_date_picker
 from backend.func import delete_by_id
+# from datetime import datetime                     ## WITH DATABASE
+# from model.jadwal import Jadwal                   ## WITH DATABASE
+# from backend.format_time import formatted_time    ## DENGAN DATABASE
 
 
 
@@ -31,7 +29,14 @@ class ItemTask(UserControl):
             controls=[
                 Container(
                     content=Card(
-                        content=Text(self.nama_acara),
+                        content=Row(
+                            [
+                            Text(
+                            f'\t\t{self.nama_acara}',
+                            weight=FontWeight.BOLD
+                        ),
+                            ],
+                        ), 
                         color=colors.GREEN,
                         height=40,
                     ),
@@ -45,8 +50,8 @@ class ItemTask(UserControl):
                     content=Card(
                         content=Row(
                             controls=[
-                                Text(f"{format_datetime_[0]}, {format_datetime_[1]} {format_datetime_[2]} {format_datetime_[3]}"),
-                                Text(str(self.waktu.strftime('%H:%M')))
+                                Text(f"\t\t{format_datetime_[0]}, {format_datetime_[1]} {format_datetime_[2]} {format_datetime_[3]}", weight=FontWeight.BOLD),
+                                Text(str(self.waktu.strftime('%H:%M')), weight=FontWeight.BOLD)
                             ]),
                         color=colors.GREEN,
                         height=40
@@ -60,6 +65,7 @@ class ItemTask(UserControl):
                         ref=ref2.ICON_EDIT,
                         icon=icons.EDIT,
                         on_click=lambda e:to_edit_jadwal(e, self.page, self.id),   # self.id
+                        tooltip='Edit Jadwal'
                         
                     ),
                     margin=margin.only(top=20)
@@ -67,7 +73,8 @@ class ItemTask(UserControl):
                 Container(
                     content=IconButton(
                         icon=icons.DELETE,
-                        on_click=lambda e:open_dialog_delete(e, self.page, self.id)   # self.id
+                        on_click=lambda e:open_dialog_delete(e, self.page, self.id),   # self.id
+                        tooltip='Delete Jadwal'
                     ),
                     margin=margin.only(top=20)
                 ),
@@ -168,50 +175,3 @@ def show_item_view(page):
         )
     if ref.LISTVIEW.current is not None:
         ref.LISTVIEW.current.update()
-
-
-
-
-# def create_item_view():
-#     print(f'Format: {db.list_of_item[-1].date}')
-#     ref.LISTVIEW.current.controls.append(
-#         Row(
-#             controls=[
-#                 Container(
-#                     content=Card(
-#                         content=Text(str(db.list_of_item[-1].nama_acara))
-#                     ),
-#                     on_click=...
-#                 ),
-#                 # Container(
-#                 #     content=Card(
-#                 #         content=ResponsiveRow(
-#                 #             controls=[
-#                 #                 Text(str(db.list_of_item[-1].date)),
-#                 #                 Text(str(db.list_of_item[-1].waktu))
-#                 #             ]
-#                 #         )
-#                 #     ),
-#                 #     on_click=...
-#                 # ),
-#                 Container(
-#                     content=Card(
-#                         content=Text(str(db.list_of_item[-1].date))
-#                     ),
-#                     on_click=...
-#                 ),
-#                 IconButton(
-#                     icon=icons.EDIT,
-#                     on_click=...
-#                 ),
-#                 IconButton(
-#                     icon=icons.DELETE,
-#                     on_click=...
-#                 ),
-#             ]
-#         )
-#     )
-
-#     ref.LISTVIEW.current.update()
-
-#     print(ref.LISTVIEW.current.controls)

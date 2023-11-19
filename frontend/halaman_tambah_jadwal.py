@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
-import flet
 from flet import *
+import flet
 from model.jadwal import Jadwal
-from backend import database as db
-from backend.format_time import formatted_time
-from reference.ref import RefHalamanTambahJadwal as ref
 from frontend import item_task
 from frontend.tampilan_date_picker import format_date_picker
+from reference.ref import RefHalamanTambahJadwal as ref
+from backend import database as db
+from backend.format_time import formatted_time
 from backend.notification import schedule_notification
 
 
@@ -29,7 +29,7 @@ def view_halaman_tambah_jadwal(page):
             controls=[
                 TextField(
                     ref=ref.TEXTFIELD_NAMA_ACARA,
-                    label='Nama Acara',
+                    label='Nama Jadwal',
                 ),
                 Row(
                     controls=[
@@ -51,16 +51,18 @@ def view_halaman_tambah_jadwal(page):
         ),
         FloatingActionButton(
             ref=ref.FLOATING_ACTION_BUTTON,
-            text='Setel',
+            text='Tambah',
             # on_click=lambda _:page.go('/'),
             on_click=lambda e: tambah_jadwal(e, page),
             data='Nama saya adalah',
+            tooltip='Tambah Jadwal',
         ),
         
 ]
     
 def tambah_jadwal(e, page):
 
+    #### DENGAN DATABASE
     # id_jadwal = db.object_db.insert_data(
     #     ref.TEXTFIELD_NAMA_ACARA.current.value,
     #     ref.DATE_PICKER.current.value,
@@ -149,13 +151,11 @@ def open_banner(e, page):
 
 def banner(page):
     page.banner = Banner(
-        # ref=ref3.BANNER,
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
             "Oops, Sepertinya Ada Bug! Plis Jangan Repot Kami !!!",
         ),
-        # force_actions_below=True,
         actions=[
             TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
         ],

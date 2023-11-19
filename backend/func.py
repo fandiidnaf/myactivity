@@ -1,7 +1,4 @@
-from backend.database import list_of_item, object_db
-# from myactivity.model.jadwal import Jadwal
-# from myactivity.reference.ref import RefEditView as ref
-# from myactivity.frontend.edit_view import edit_view
+from backend.database import list_of_item
 
 def search_by_id(id_task: str):
     for x in list_of_item:
@@ -16,13 +13,3 @@ def delete_by_id(id_task: str):
     # object_db.delete_data(id_task)
     ######### ##
     list_of_item.remove(x)
-
-
-# def open_dialog_view_edit(e, page, id_task):
-
-#     result_jadwal = search_by_id(id_task)
-#     obj = edit_view(result_jadwal)
-
-#     page.dialog = obj
-#     obj.open = True
-#     page.update()

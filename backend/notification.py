@@ -52,10 +52,3 @@ def schedule_notification(task, tanggal ,scheduled_time):
 # scheduled_time = input("Masukkan waktu (HH:MM): ")
 
 # schedule_notification(task_name, scheduled_time)
-
-# a = datetime(2023,11,19)
-# b = datetime(2023,11,20)
-
-# c = b - a
-
-# print(b - a)
