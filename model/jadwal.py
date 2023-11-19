@@ -7,3 +7,4 @@ class Jadwal:
         self.nama_acara = nama_acara
         self.date = date
         self.waktu = waktu
+        

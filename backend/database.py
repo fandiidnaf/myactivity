@@ -1,15 +1,13 @@
-### DATABASE SEMENTARA
-# import sqlite3
-import sqlite3
 import uuid
 from model.jadwal import Jadwal
+import json
+import os
+
 
 list_of_item: list[Jadwal] = []
 
-import json
-import os
-import uuid
-from datetime import datetime, time
+
+
 
 class JSONDatabaseManager:
     def __init__(self, json_file='./backend/data.json'):
@@ -87,18 +85,6 @@ class JSONDatabaseManager:
 object_db = JSONDatabaseManager()
 
 
-
 def generate_unique_id():
     unique_id = str(uuid.uuid4())
     return unique_id
-
-# con = sqlite3.connect('database.db')
-
-# cursor = con.cursor()
-
-# cursor.execute(
-#     '''
-#     CREATE TABLE jadwal
-#     ()
-# '''
-# )

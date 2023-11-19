@@ -7,6 +7,8 @@ from frontend.edit_view import view_edit_jadwal
 from frontend.item_task import show_item_view
 
 def main(page: Page):
+    page.title = 'myactivity'
+
     def route_change(route):
         page.views.clear()
         page.views.append(
@@ -55,5 +57,7 @@ def main(page: Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go(page.route)
+    page.scroll = ScrollMode.ALWAYS
+
 
 flet.app(target=main)
