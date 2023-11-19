@@ -5,14 +5,18 @@ import time
 def schedule_notification(task, tanggal ,scheduled_time):
     # Mendapatkan tanggal dan waktu saat ini
     now = datetime.now()
+    # print(now.date())
 
-    diff_tanggal = (tanggal - now).days
+    print(f'type tanggal : {type(tanggal)}')
+    print(f'tanggal : {tanggal}')
+
+    diff_tanggal = (tanggal.date() - now.date()).days
     print(f'diff_tanggal {diff_tanggal}')
 
-    # if diff_tanggal < 0:
-    #     diff_tanggal = 0
+    if diff_tanggal < 0:
+        diff_tanggal = 0
 
-    diff_tanggal = max(diff_tanggal, 0)
+    # diff_tanggal = max(diff_tanggal, 0)
 
     # Membaca jam dan menit dari input pengguna
     scheduled_hour, scheduled_minute = map(int, scheduled_time.split(':'))
@@ -37,7 +41,7 @@ def schedule_notification(task, tanggal ,scheduled_time):
 
     # Munculkan notifikasi
     notification.notify(
-        title='Jadwal Anda Dimulai',
+        title='Notifikasi Jadwal',
         message=f'Waktunya untuk: {task}',
         app_icon=None,  # e.g. 'C:\\icon_32x32.ico'
         timeout=10,  # seconds

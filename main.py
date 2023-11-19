@@ -19,6 +19,7 @@ def main(page: Page):
         )
 
         if page.route == "/tambah_jadwal":
+            page.views.clear()
             page.views.append(
                 View(
                     route="/tambah_jadwal",
@@ -30,6 +31,7 @@ def main(page: Page):
             )
 
         elif page.route == "/edit_jadwal":
+            page.views.clear()
             page.views.append(
                 View(
                     route="/edit_jadwal",
@@ -39,6 +41,7 @@ def main(page: Page):
                 )
             )
 
+
         page.update()
 
 
@@ -46,6 +49,7 @@ def main(page: Page):
         page.views.pop()
         top_view = page.views[-1]
         page.go(top_view.route)
+        # page.views.clear()
         show_item_view(page)
 
     page.on_route_change = route_change

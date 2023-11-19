@@ -10,6 +10,7 @@ from reference.ref import RefEditView as ref3
 from frontend.tampilan_date_picker import format_date_picker
 from backend.format_time import formatted_time
 from frontend import item_task
+from backend import database as db
 
 
 def view_edit_jadwal(page):
@@ -18,8 +19,15 @@ def view_edit_jadwal(page):
     jadwal = search(ref2.ICON_EDIT.current.data)
     format_jadwal_date = format_date_picker(jadwal.date)
     # page.control.data
+    banner(page)
+
     return [
         AppBar(
+            leading=IconButton(
+                ref=ref.ICONBUTTON_BACK,
+                icon=icons.ARROW_BACK,
+                on_click=lambda e: open_banner(e, page)
+            ),
             title=Text('Edit Jadwal'),
         ),
         Column(
@@ -52,6 +60,42 @@ def view_edit_jadwal(page):
 
         
     ]
+
+def open_banner(e, page):
+    page.banner.open = True
+    page.update()
+
+def banner(page):
+    page.banner = Banner(
+        # ref=ref3.BANNER,
+        bgcolor=colors.AMBER_100,
+        leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
+        content=Text(
+            "Oops, Sepertinya Ada Bug!\nPlis Jangan Repot Kami !!!",
+            size=50
+        ),
+        # force_actions_below=True,
+        actions=[
+            TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
+        ],
+    )
+
+def close_banner(e, page):
+    page.banner.open = False
+    page.update()
+
+# def banner(page):
+#     page.banner = Banner(
+#         bgcolor=colors.AMBER_100,
+#         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
+#         content=Text(
+#             "Oops, Sepertinya Ada Bug! Plis Jangan Repot Kami !!!"
+#         ),
+#         actions=[
+#             TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
+#         ],
+#     )
+
 
 
 def show_date_picker_edit(e, page, jadwal):
@@ -91,6 +135,13 @@ def edit_jadwal(e, page, jadwal):
     else:
         res_date = ref3.DATE_PICKER.current.value
 
+    ## DENGAN DATABASE
+    # db.object_db.edit_data(
+    #     ref2.ICON_EDIT.current.data,
+    #     ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value,
+    #     ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date,
+    #     formatted_time(ref3.TEXTFIELD_WAKTU_EDIT.current.value)
+    # )
 
     jadwal.nama_acara = ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value
     jadwal.date = ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date

@@ -1,5 +1,6 @@
 import flet 
 from flet import *
+from frontend.item_task import show_item_view
 from reference.ref import RefHalamanUtama as ref
 from backend import database as db
 
@@ -63,6 +64,8 @@ def view_halaman_utama(page):
         on_click=lambda _: page.go('/tambah_jadwal')
     ),
 ]
+
+
 
 
 
