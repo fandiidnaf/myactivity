@@ -1,6 +1,9 @@
+from datetime import datetime
 from math import exp
 from flet import *
 import flet
+from backend.format_time import formatted_time
+from model.jadwal import Jadwal
 from reference.ref import RefHalamanUtama as ref
 from backend import database as db
 from backend.func import *
@@ -126,6 +129,32 @@ def to_edit_jadwal(e, page, id_task):
     page.go('/edit_jadwal')
 
 def show_item_view(page):
+    #### WITH DATABASE
+    # if len(db.object_db.get_all_data()) != 0:
+    #     for data in db.object_db.get_all_data():
+    #         db.list_of_item.append(
+    #             Jadwal(
+    #                 data['id'],
+    #                 data['nama_jadwal'],
+    #                 datetime.strptime(data['tanggal'], '%Y-%m-%d'),
+    #                 formatted_time(data['waktu'])
+    #             )
+    #         )
+    #     # for jadwal in db.list_of_item]:   # terbary dari bawah ke atas
+    #     for jadwal in db.list_of_item[::-1]:    # terbaru dari atas ke bawah
+    #         ref.LISTVIEW.current.controls.append(
+    #             ItemTask(
+    #                 jadwal.nama_acara, 
+    #                 jadwal.waktu, 
+    #                 jadwal.id, 
+    #                 jadwal.date,
+    #                 page
+    #             )
+    #         )
+    #     if ref.LISTVIEW.current is not None:
+    #         ref.LISTVIEW.current.update()
+
+    ##### NO DATABASE
     # for jadwal in db.list_of_item]:   # terbary dari bawah ke atas
     for jadwal in db.list_of_item[::-1]:    # terbaru dari atas ke bawah
         ref.LISTVIEW.current.controls.append(

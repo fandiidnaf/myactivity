@@ -12,9 +12,16 @@ from backend.notification import schedule_notification
 
 
 def view_halaman_tambah_jadwal(page):
+
+    banner(page)
     return [
         AppBar(
             ref=ref.APPBAR,
+            leading=IconButton(
+                ref=ref.ICONBUTTON_BACK,
+                icon=icons.ARROW_BACK,
+                on_click=lambda e: open_banner(e, page)
+            ),
             title=Text("Tambahkan Jadwal Anda")
         ),
         Column(
@@ -53,6 +60,14 @@ def view_halaman_tambah_jadwal(page):
 ]
     
 def tambah_jadwal(e, page):
+
+    # id_jadwal = db.object_db.insert_data(
+    #     ref.TEXTFIELD_NAMA_ACARA.current.value,
+    #     ref.DATE_PICKER.current.value,
+    #     formatted_time(ref.TEXTFIELD_WAKTU.current.value)
+    # )
+
+    # NO DATABASE
     db.list_of_item.append(
         Jadwal(
             db.generate_unique_id(),
@@ -61,6 +76,16 @@ def tambah_jadwal(e, page):
             formatted_time(ref.TEXTFIELD_WAKTU.current.value)
         )
     )
+    
+    ## DENGAN DATABASE
+    # db.list_of_item.append(
+    #     Jadwal(
+    #         id_jadwal,
+    #         ref.TEXTFIELD_NAMA_ACARA.current.value,
+    #         ref.DATE_PICKER.current.value,
+    #         formatted_time(ref.TEXTFIELD_WAKTU.current.value)
+    #     )
+    # )
 
     page.go("/")
 
@@ -117,3 +142,25 @@ def on_change_date_picker(e):
         )
 
         ref.ROW_DATE_PICKER.current.update()
+
+def open_banner(e, page):
+    page.banner.open = True
+    page.update()
+
+def banner(page):
+    page.banner = Banner(
+        # ref=ref3.BANNER,
+        bgcolor=colors.AMBER_100,
+        leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
+        content=Text(
+            "Oops, Sepertinya Ada Bug! Plis Jangan Repot Kami !!!",
+        ),
+        # force_actions_below=True,
+        actions=[
+            TextButton("OK, Saya Mengerti!", on_click=lambda e: close_banner(e, page)),
+        ],
+    )
+
+def close_banner(e, page):
+    page.banner.open = False
+    page.update()
