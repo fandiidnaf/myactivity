@@ -1,12 +1,11 @@
-import asyncio
+# import asyncio
+from datetime import datetime
 from flet import *
 import flet 
-from reference.ref import RefHalamanUtama as ref
 from frontend.item_task import ItemTask
+from reference.ref import RefHalamanUtama as ref
 from backend import database as db
-from datetime import datetime
-from backend.notification import Notification
-# from frontend.item_task import show_item_view     ## SEHARUSNYA DENGAN DATABASE IMPORT INI
+# from backend.notification import Notification
 
    
 def view_halaman_utama(page):
@@ -56,14 +55,6 @@ def view_halaman_utama(page):
             ),
         ]
     ),
-    # Text(ref=ref.TEXT,value='Halo'),
-    # ListView(           ## refresh_halaman_utama
-    #     ref=ref.LISTVIEW,
-    #     auto_scroll=True,
-    # ) if len(db.list_of_item) != 0 else Container(
-    #     content=Text("Tambahkan Jadwal dengan menekan icon +"), alignment=alignment.center,
-    # ),
-    # refresh_halaman_utama(page),
     refresh_halaman_utama(page),
     FloatingActionButton(
         ref=ref.FLOATING_ACTION_BUTTON,
@@ -82,9 +73,6 @@ def route_to_tambah_jadwal(e, page: Page):
 def refresh_halaman_utama(page):
     result = db.object_db.get_all_data()
 
-    # for x in result:
-    #     print(x['id'])
-
     if len(result) > 0:
         # asyncio.run(Notification().schedule_notification())
 
@@ -94,11 +82,21 @@ def refresh_halaman_utama(page):
             controls=[ItemTask(x['nama_jadwal'], x['waktu'], x['id'], datetime.strptime(x['tanggal'], '%Y-%m-%d'), page) for x in result]
         )
     
-    
         
     else:
-        return Text(
-            value='OOPS SEPERTINYA DAFTAR ANDA MASIH KOSONG\nKLIK ICON + DI BAWAH'
+        return Column(
+            alignment=MainAxisAlignment.CENTER,
+            horizontal_alignment=CrossAxisAlignment.CENTER,
+            controls=[
+                Row(
+                    alignment=MainAxisAlignment.CENTER,
+                    vertical_alignment=CrossAxisAlignment.CENTER,
+                    controls=[
+                        Text(
+                            value='OOPS SEPERTINYA DAFTAR JADWAL ANDA MASIH KOSONG\nKLIK ICON + DI BAWAH',
+                            weight=FontWeight.BOLD
+                        )
+                    ]
+                )
+            ]
         )
-
-

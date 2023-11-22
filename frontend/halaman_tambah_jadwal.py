@@ -1,19 +1,14 @@
 from datetime import datetime, timedelta
 from flet import *
 import flet
-from model.jadwal import Jadwal
-from frontend import item_task
 from frontend.tampilan_date_picker import format_date_picker
 from reference.ref import RefHalamanTambahJadwal as ref
 from backend import database as db
 from backend.format_time import formatted_time
 # from backend.notification import schedule_notification
-import time
-
 
 
 def view_halaman_tambah_jadwal(page):
-
     banner(page)
     return [
         AppBar(
@@ -53,7 +48,6 @@ def view_halaman_tambah_jadwal(page):
         FloatingActionButton(
             ref=ref.FLOATING_ACTION_BUTTON,
             text='Tambah',
-            # on_click=lambda _:page.go('/'),
             on_click=lambda e: tambah_jadwal(e, page),
             data='Nama saya adalah',
             tooltip='Tambah Jadwal',
@@ -62,34 +56,13 @@ def view_halaman_tambah_jadwal(page):
 ]
     
 def tambah_jadwal(e, page: Page):
-
     #### DENGAN DATABASE
     id_jadwal = db.object_db.insert_data(
         ref.TEXTFIELD_NAMA_ACARA.current.value,
         ref.DATE_PICKER.current.value,
         formatted_time(ref.TEXTFIELD_WAKTU.current.value)
     )
-    print("APAKAH BERHASIL")
-
-    # NO DATABASE
-    # db.list_of_item.append(
-    #     Jadwal(
-    #         db.generate_unique_id(),
-    #         ref.TEXTFIELD_NAMA_ACARA.current.value,
-    #         ref.DATE_PICKER.current.value,
-    #         formatted_time(ref.TEXTFIELD_WAKTU.current.value)
-    #     )
-    # )
-    
-    ## DENGAN DATABASE
-    # db.list_of_item.append(
-    #     Jadwal(
-    #         id_jadwal,
-    #         ref.TEXTFIELD_NAMA_ACARA.current.value,
-    #         ref.DATE_PICKER.current.value,
-    #         formatted_time(ref.TEXTFIELD_WAKTU.current.value)
-    #     )
-    # )
+    print("BERHASIL MEMASUKKAN DATA KE DATABASE")
 
     # schedule_notification(
     #     ref.TEXTFIELD_NAMA_ACARA.current.value,
@@ -97,21 +70,11 @@ def tambah_jadwal(e, page: Page):
     #     ref.TEXTFIELD_WAKTU.current.value
     # )
     
-    # item_task.show_item_view(page)
+
     # page.route = '/'
-    # page.go('/')
-    print(f'page 0 : {page.views[0].route}')
-    # page.go(page.views[0].route)
     page.go("/")
     page.update()
 
-    print("APAKAH PERGI")
-
-    
-    # print(db.list_of_item)
-
-    # for x in db.list_of_item:
-    #     print(x.waktu)
 
 def show_date_picker(e, page):
     DatePicker(
