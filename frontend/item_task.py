@@ -51,7 +51,8 @@ class ItemTask(UserControl):
                         content=Row(
                             controls=[
                                 Text(f"\t\t{format_datetime_[0]}, {format_datetime_[1]} {format_datetime_[2]} {format_datetime_[3]}", weight=FontWeight.BOLD),
-                                Text(str(self.waktu.strftime('%H:%M')), weight=FontWeight.BOLD)
+                                # Text(str(self.waktu.strftime('%H:%M')), weight=FontWeight.BOLD)
+                                Text(self.waktu, weight=FontWeight.BOLD)
                             ]),
                         color=colors.GREEN,
                         height=40
@@ -94,28 +95,32 @@ def delete_jadwal_dialog(e, page):
             ),
             TextButton(
                 text='Hapus',
-                on_click=lambda e:click_hapus_delete(page)
+                on_click=lambda e:click_hapus_delete(e, page)
             )
         ],
         actions_alignment=MainAxisAlignment.SPACE_AROUND,
     )
 
 
-def click_hapus_delete(page):
+def click_hapus_delete(e, page):
     data_now = ref2.ALERT_DIALOG_DELETE.current.data
-    print(data_now)
+    print(f'data now: {data_now}')
     jadwal = search_by_id(data_now)
-    close_dialog_delete(object(), page)
-    delete_by_id(data_now)
 
-    for x in ref.LISTVIEW.current.controls:
-        print(type(x))
-        if x.id == data_now:
-            print(f'id:{x.id} | {data_now}')
-            ref.LISTVIEW.current.controls.remove(x)
-            print(f'List : {ref.LISTVIEW.current.controls}')
-        ref.LISTVIEW.current.update()
-    print(list_of_item)
+    db.object_db.delete_data(jadwal['id'])
+    close_dialog_delete(object(), page)
+    # delete_by_id(data_now)
+
+    page.go('/')
+    page.update()
+    # for x in ref.LISTVIEW.current.controls:
+    #     print(type(x))
+    #     if x.id == data_now:
+    #         print(f'id:{x.id} | {data_now}')
+    #         ref.LISTVIEW.current.controls.remove(x)
+    #         print(f'List : {ref.LISTVIEW.current.controls}')
+    #     ref.LISTVIEW.current.update()
+    # print(list_of_item)
     # show_item_view(page)
 
 def open_dialog_delete(e, page, id_task):
@@ -131,9 +136,15 @@ def close_dialog_delete(e, page):
 
 
 
-def to_edit_jadwal(e, page, id_task):
+def to_edit_jadwal(e, page: Page, id_task):
+    # print(f'id : {id_task}')
     ref2.ICON_EDIT.current.data = id_task
-    page.go('/edit_jadwal')
+    # print(f'data: {ref2.ICON_EDIT.current.data}')
+    # page.go('/edit_jadwal')
+    # page.route = '/edit_jadwal'
+    page.data = id_task
+    page.go("/edit_jadwal")
+    page.update()
 
 def show_item_view(page):
     #### WITH DATABASE

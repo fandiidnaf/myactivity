@@ -9,7 +9,9 @@ from frontend.item_task import show_item_view
 def main(page: Page):
     page.title = 'myactivity'
 
-    def route_change(route):
+    def route_change(routes):
+
+        # print(f'View : {page.views}')
         page.views.clear()
         page.views.append(
             View(
@@ -19,9 +21,20 @@ def main(page: Page):
                 controls=view_halaman_utama(page),
             )
         )
+        page.update()
+
+        # if page.route == "/":
+        #     # page.views.clear()
+        #     page.views.append(
+        #         View(
+        #             route='/',
+        #             controls=view_halaman_utama(page)
+        #         )
+        #     )
+        #     page.update()
 
         if page.route == "/tambah_jadwal":
-            page.views.clear()
+            # page.views.clear()
             page.views.append(
                 View(
                     route="/tambah_jadwal",
@@ -31,9 +44,10 @@ def main(page: Page):
 
                 )
             )
+            page.update()
 
         elif page.route == "/edit_jadwal":
-            page.views.clear()
+            # page.views.clear()
             page.views.append(
                 View(
                     route="/edit_jadwal",
@@ -42,6 +56,7 @@ def main(page: Page):
                     controls=view_edit_jadwal(page)
                 )
             )
+            page.update()
 
 
         page.update()
@@ -50,14 +65,17 @@ def main(page: Page):
     def view_pop(view):
         page.views.pop()
         top_view = page.views[-1]
-        page.go(top_view.route)
+        # page.go(top_view.route)
+        page.go('/')
         # page.views.clear()
-        show_item_view(page)
+        # show_item_view(page)
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-    page.go(page.route)
+    page.go('/')
     page.scroll = ScrollMode.ALWAYS
 
+    page.update()
 
-flet.app(target=main)
+
+flet.app(target=main, view=AppView.FLET_APP_WEB)
