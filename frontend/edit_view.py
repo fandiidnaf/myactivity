@@ -14,25 +14,28 @@ from backend import database as db
 def view_edit_jadwal(page):
     # jadwal = search_by_id(id_task)
     # print(page.controls)
-    jadwal = search(ref2.ICON_EDIT.current.data)
-    format_jadwal_date = format_date_picker(jadwal.date)
+    print(f'icon : {page.data}')
+    # jadwal = search(ref2.ICON_EDIT.current.data)
+    jadwal = search(page.data)
+    print(f'jadwal: {jadwal}')
+    format_jadwal_date = format_date_picker(datetime.strptime(jadwal['tanggal'], '%Y-%m-%d'))
     # page.control.data
     banner(page)
 
     return [
         AppBar(
-            leading=IconButton(
-                ref=ref.ICONBUTTON_BACK,
-                icon=icons.ARROW_BACK,
-                on_click=lambda e: open_banner(e, page)
-            ),
+            # leading=IconButton(
+            #     ref=ref.ICONBUTTON_BACK,
+            #     icon=icons.ARROW_BACK,
+            #     on_click=lambda e: open_banner(e, page)
+            # ),
             title=Text('Edit Jadwal'),
         ),
         Column(
                 controls=[
                     TextField(
                         ref=ref3.TEXTFIELD_NAMA_ACARA_EDIT,
-                        value=str(jadwal.nama_acara),
+                        value=str(jadwal['nama_jadwal']),
                         label='Nama Jadwal'
                     ),
                     Row(
@@ -48,7 +51,7 @@ def view_edit_jadwal(page):
                     ),
                     TextField(
                         ref=ref3.TEXTFIELD_WAKTU_EDIT,
-                        value=str(jadwal.waktu.strftime('%H:%M')),
+                        value=str(jadwal['waktu']),
                         label='Waktu Jadwal',
                         hint_text='HH:MM'
                     )
@@ -57,7 +60,7 @@ def view_edit_jadwal(page):
             FloatingActionButton(
                 tooltip='Edit Jadwal',
                 text='Edit',
-                on_click=lambda e:edit_jadwal(e, page, jadwal)
+                on_click=lambda e:edit_jadwal(e, page, jadwal, page.data)
             )
 
         
@@ -87,7 +90,7 @@ def close_banner(e, page):
 def show_date_picker_edit(e, page, jadwal):
     DatePicker(
         ref=ref3.DATE_PICKER,
-        current_date=jadwal.date,
+        current_date=datetime.strptime(jadwal['tanggal'], "%Y-%m-%d"),
         first_date=datetime.now(),
         last_date=datetime.now() + timedelta(365),
         on_change=on_change_date_picker_edit
@@ -115,24 +118,29 @@ def on_change_date_picker_edit(e):
     ref3.ROW_DATE_PICKER_EDIT.current.update()
 
 
-def edit_jadwal(e, page, jadwal):
+def edit_jadwal(e, page, jadwal, id_jadwal):
     if ref3.DATE_PICKER.current is None:
-        res_date = jadwal.date
+        res_date = datetime.strptime(jadwal['tanggal'], '%Y-%m-%d')
     else:
         res_date = ref3.DATE_PICKER.current.value
 
-    ## DENGAN DATABASE
-    # db.object_db.edit_data(
-    #     ref2.ICON_EDIT.current.data,
-    #     ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value,
-    #     ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date,
-    #     formatted_time(ref3.TEXTFIELD_WAKTU_EDIT.current.value)
-    # )
+    # DENGAN DATABASE
+    db.object_db.edit_data(
+        # ref2.ICON_EDIT.current.data,
+        id_jadwal,
+        ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value,
+        ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date,
+        formatted_time(ref3.TEXTFIELD_WAKTU_EDIT.current.value)
+    )
 
-    jadwal.nama_acara = ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value
-    jadwal.date = ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date
-    jadwal.waktu = formatted_time(ref3.TEXTFIELD_WAKTU_EDIT.current.value)
+    print("EDIT PAGE BERHASIL")
 
-    page.go("/")
+    # jadwal.nama_acara = ref3.TEXTFIELD_NAMA_ACARA_EDIT.current.value
+    # jadwal.date = ref3.DATE_PICKER.current.value if ref3.DATE_PICKER.current is not None else res_date
+    # jadwal.waktu = formatted_time(ref3.TEXTFIELD_WAKTU_EDIT.current.value)
 
-    item_task.show_item_view(page)
+    # page.go("/")
+    page.route = '/'
+    page.update()
+
+    # item_task.show_item_view(page)

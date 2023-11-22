@@ -1,7 +1,11 @@
+import asyncio
 from flet import *
 import flet 
 from reference.ref import RefHalamanUtama as ref
+from frontend.item_task import ItemTask
 from backend import database as db
+from datetime import datetime
+from backend.notification import Notification
 # from frontend.item_task import show_item_view     ## SEHARUSNYA DENGAN DATABASE IMPORT INI
 
    
@@ -53,16 +57,48 @@ def view_halaman_utama(page):
         ]
     ),
     # Text(ref=ref.TEXT,value='Halo'),
-    ListView(
-        ref=ref.LISTVIEW,
-        auto_scroll=True,
-    ) if len(db.list_of_item) != 0 else Container(
-        content=Text("Tambahkan Jadwal dengan menekan icon +"), alignment=alignment.center,
-    ),
+    # ListView(           ## refresh_halaman_utama
+    #     ref=ref.LISTVIEW,
+    #     auto_scroll=True,
+    # ) if len(db.list_of_item) != 0 else Container(
+    #     content=Text("Tambahkan Jadwal dengan menekan icon +"), alignment=alignment.center,
+    # ),
+    # refresh_halaman_utama(page),
+    refresh_halaman_utama(page),
     FloatingActionButton(
         ref=ref.FLOATING_ACTION_BUTTON,
         icon=icons.ADD, 
-        on_click=lambda _: page.go('/tambah_jadwal'),
+        on_click=lambda e: route_to_tambah_jadwal(e, page),
         tooltip='Tambah Jadwal Anda'
     ),
 ]
+
+
+def route_to_tambah_jadwal(e, page: Page):
+    # page.route = '/tambah_jadwal'
+    page.go("/tambah_jadwal")
+    page.update()
+
+def refresh_halaman_utama(page):
+    result = db.object_db.get_all_data()
+
+    # for x in result:
+    #     print(x['id'])
+
+    if len(result) > 0:
+        # asyncio.run(Notification().schedule_notification())
+
+        return ListView(
+            ref=ref.LISTVIEW,
+            auto_scroll=True,
+            controls=[ItemTask(x['nama_jadwal'], x['waktu'], x['id'], datetime.strptime(x['tanggal'], '%Y-%m-%d'), page) for x in result]
+        )
+    
+    
+        
+    else:
+        return Text(
+            value='OOPS SEPERTINYA DAFTAR ANDA MASIH KOSONG\nKLIK ICON + DI BAWAH'
+        )
+
+
