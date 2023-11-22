@@ -8,7 +8,6 @@ list_of_item: list[Jadwal] = []
 
 
 
-
 class JSONDatabaseManager:
     def __init__(self, json_file='./backend/data.json'):
         self.json_file = json_file
@@ -85,6 +84,6 @@ class JSONDatabaseManager:
 object_db = JSONDatabaseManager()
 
 
-def generate_unique_id():
-    unique_id = str(uuid.uuid4())
-    return unique_id
+# def generate_unique_id():
+#     unique_id = str(uuid.uuid4())
+#     return unique_id

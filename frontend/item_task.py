@@ -5,15 +5,10 @@ from reference.ref import RefHalamanUtama as ref
 from reference.ref import RefItemTask as ref2
 from backend import database as db
 from backend.func import *
-from backend.func import delete_by_id
-# from datetime import datetime                     ## WITH DATABASE
-# from model.jadwal import Jadwal                   ## WITH DATABASE
-# from backend.format_time import formatted_time    ## DENGAN DATABASE
 
 
 
 class ItemTask(UserControl):
-
     def __init__(self, nama_acara, waktu, id_task, datetime, page):
         super().__init__()
         self.nama_acara = nama_acara
@@ -40,7 +35,6 @@ class ItemTask(UserControl):
                         color=colors.GREEN,
                         height=40,
                     ),
-                    # on_click=...,   # self.id
                     expand=4,
                     margin=margin.only(left=20,top=20)
 
@@ -51,13 +45,11 @@ class ItemTask(UserControl):
                         content=Row(
                             controls=[
                                 Text(f"\t\t{format_datetime_[0]}, {format_datetime_[1]} {format_datetime_[2]} {format_datetime_[3]}", weight=FontWeight.BOLD),
-                                # Text(str(self.waktu.strftime('%H:%M')), weight=FontWeight.BOLD)
                                 Text(self.waktu, weight=FontWeight.BOLD)
                             ]),
                         color=colors.GREEN,
                         height=40
                     ),
-                    # on_click=...,   # self.id
                     expand=2,
                     margin=margin.only(top=20)
                 ),
@@ -104,27 +96,16 @@ def delete_jadwal_dialog(e, page):
 
 def click_hapus_delete(e, page):
     data_now = ref2.ALERT_DIALOG_DELETE.current.data
-    print(f'data now: {data_now}')
     jadwal = search_by_id(data_now)
 
     db.object_db.delete_data(jadwal['id'])
     close_dialog_delete(object(), page)
-    # delete_by_id(data_now)
 
     page.go('/')
     page.update()
-    # for x in ref.LISTVIEW.current.controls:
-    #     print(type(x))
-    #     if x.id == data_now:
-    #         print(f'id:{x.id} | {data_now}')
-    #         ref.LISTVIEW.current.controls.remove(x)
-    #         print(f'List : {ref.LISTVIEW.current.controls}')
-    #     ref.LISTVIEW.current.update()
-    # print(list_of_item)
-    # show_item_view(page)
+
 
 def open_dialog_delete(e, page, id_task):
-    # page.dialog = ref2.ALERT_DIALOG_DELETE.current
     page.dialog = delete_jadwal_dialog(object(), page)
     ref2.ALERT_DIALOG_DELETE.current.open = True
     ref2.ALERT_DIALOG_DELETE.current.data = id_task
@@ -137,15 +118,16 @@ def close_dialog_delete(e, page):
 
 
 def to_edit_jadwal(e, page: Page, id_task):
-    # print(f'id : {id_task}')
     ref2.ICON_EDIT.current.data = id_task
-    # print(f'data: {ref2.ICON_EDIT.current.data}')
-    # page.go('/edit_jadwal')
+
     # page.route = '/edit_jadwal'
     page.data = id_task
     page.go("/edit_jadwal")
     page.update()
 
+
+
+#################### OPTIONAL : SEKARANG TIDAK DIGUNAKAN 
 def show_item_view(page):
     #### WITH DATABASE
     # if len(db.object_db.get_all_data()) != 0:

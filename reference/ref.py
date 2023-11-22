@@ -10,7 +10,6 @@ class RefHalamanUtama:
     POPUPMENUITEM_1 = Ref[PopupMenuItem]()
     POPUPMENUITEM_2 = Ref[PopupMenuItem]()
     POPUPMENUITEM_3 = Ref[PopupMenuItem]()
-    # TEXT = Ref[Text]()
     LISTVIEW = Ref[ListView]()
     FLOATING_ACTION_BUTTON = Ref[FloatingActionButton]()
 
