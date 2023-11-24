@@ -4,5 +4,11 @@
     "nama_jadwal": "test ke -1",
     "tanggal": "2023-11-24",
     "waktu": "10:10"
+  },
+  {
+    "id": "704f9ab2-ea6a-415b-a14e-77df84b34988",
+    "nama_jadwal": "test ke -3",
+    "tanggal": "2023-11-30",
+    "waktu": "10:10"
   }
 ]
