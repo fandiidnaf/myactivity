@@ -42,14 +42,14 @@ def view_halaman_utama(page):
                 ref=ref.POPUPMENUBUTTON,
                 items=[
                     PopupMenuItem(
-                        ref=ref.POPUPMENUITEM_1,
-                        text='Semua jadwal'),
-                    PopupMenuItem(
                         ref=ref.POPUPMENUITEM_2,
-                        text='Jadwal sudah dilakukan'),
+                        text='Terbaru -> Terlama'),
                     PopupMenuItem(
                         ref=ref.POPUPMENUITEM_3,
-                        text='Jadwal belum dilakukan')
+                        text='Terlama -> Terbaru',
+                        checked=False,
+                        # on_click=lambda e: show_jadwal_terlama_ke_terbaru(e, page)
+                    )
                 ],
                 icon=icons.MENU
             ),
@@ -73,9 +73,11 @@ def route_to_tambah_jadwal(e, page: Page):
 def refresh_halaman_utama(page):
     result = db.object_db.get_all_data()
 
+
+
     if len(result) > 0:
         # asyncio.run(Notification().schedule_notification())
-
+        
         return ListView(
             ref=ref.LISTVIEW,
             auto_scroll=True,
@@ -100,3 +102,4 @@ def refresh_halaman_utama(page):
                 )
             ]
         )
+    
