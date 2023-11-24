@@ -10,7 +10,7 @@
 
 1. Open the terminal
 2. Change the current working directory to the location where you want the cloned directory.
-3. Write the command `git@github.com:fandi0717/myactivity.git` or use `git@github.com:fandi0717/myactivity.git`.
+3. Write the command `https://github.com/fandi0717/myactivity.git` or use `git@github.com:fandi0717/myactivity.git`.
 4. Change the current working directory to the cloned directory `cd myactivity`.
 5. Open the project in Visual Studio Code with the command `code .`.
 6. Open Terminal in Visual Studio Code
