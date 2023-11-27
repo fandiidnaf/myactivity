@@ -22,22 +22,22 @@ def view_halaman_utama(page):
                     color=colors.BLUE,
                     bgcolor=colors.WHITE,
                 ),
-                Text("Nama Anda", color='white')
+                Text("My Activity", color='white')
             ]
         ),
         # leading_width=40*page.width / 100,
         title=Text("SEMUA JADWAL", color='white'),
         center_title=True,
         actions=[
-            TextField(
-                ref=ref.TEXT_FIELD_SEARCH,
-                label='Cari jadwal Anda', 
-                label_style=TextStyle(color='black'),
-                bgcolor='white',
-                suffix_icon=icons.SEARCH,
-                border_radius=100,
-                height=40,
-            ),
+            # TextField(
+            #     ref=ref.TEXT_FIELD_SEARCH,
+            #     label='Cari jadwal Anda', 
+            #     label_style=TextStyle(color='black'),
+            #     bgcolor='white',
+            #     suffix_icon=icons.SEARCH,
+            #     border_radius=100,
+            #     height=40,
+            # ),
             PopupMenuButton(
                 ref=ref.POPUPMENUBUTTON,
                 items=[
