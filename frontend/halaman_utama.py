@@ -16,12 +16,12 @@ def view_halaman_utama(page):
         leading=Row(
             [
                 Divider(),
-                CircleAvatar(
-                    ref=ref.CIRCLE_AVATAR,
-                    content=Icon(icons.PEOPLE),
-                    color=colors.BLUE,
-                    bgcolor=colors.WHITE,
-                ),
+                img = ft.Image("/myactivity/icon.png",
+                width=100,
+                height=100,
+                fit=ft.ImageFit.CONTAIN,
+                )
+,
                 Text("My Activity", color='white')
             ]
         ),
