@@ -17,11 +17,11 @@ def view_halaman_utama(page):
             [
                 Divider(),
                     Image("icon.png", scale=0.8),
-                    Text("MY ACTIVITY", color='black', weight=FontWeight.BOLD, size=17)
+                    Text("MY ACTIVITY", color='white', weight=FontWeight.BOLD, size=17)
             ]
         ),
         # leading_width=40*page.width / 100,
-        title=Text("SEMUA JADWAL", color='black', weight=FontWeight.BOLD, size=20),
+        title=Text("SEMUA JADWAL", color='white', weight=FontWeight.BOLD, size=20),
         center_title=True,
         actions=[
             PopupMenuButton(
