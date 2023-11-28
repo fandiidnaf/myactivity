@@ -12,32 +12,18 @@ def view_halaman_utama(page):
     return [
         AppBar(
         ref=ref.APPBAR,
-        bgcolor='black',
+        bgcolor=colors.INDIGO_ACCENT,
         leading=Row(
             [
                 Divider(),
-                CircleAvatar(
-                    ref=ref.CIRCLE_AVATAR,
-                    content=Icon(icons.PEOPLE),
-                    color=colors.BLUE,
-                    bgcolor=colors.WHITE,
-                ),
-                Text("Nama Anda", color='white')
+                    Image("icon.png", scale=0.8),
+                    Text("MY ACTIVITY", color='black', weight=FontWeight.BOLD, size=17)
             ]
         ),
         # leading_width=40*page.width / 100,
-        title=Text("SEMUA JADWAL", color='white'),
+        title=Text("SEMUA JADWAL", color='black', weight=FontWeight.BOLD, size=20),
         center_title=True,
         actions=[
-            TextField(
-                ref=ref.TEXT_FIELD_SEARCH,
-                label='Cari jadwal Anda', 
-                label_style=TextStyle(color='black'),
-                bgcolor='white',
-                suffix_icon=icons.SEARCH,
-                border_radius=100,
-                height=40,
-            ),
             PopupMenuButton(
                 ref=ref.POPUPMENUBUTTON,
                 items=[
